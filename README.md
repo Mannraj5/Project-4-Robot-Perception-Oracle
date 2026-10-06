@@ -1,6 +1,12 @@
 # Robot Perception Oracle
 
-**A ground-truth perception node for a robotic e-waste disassembly simulation — built to unblock two downstream roles whose work could not start until something published a battery's position, and to serve as the reference the real computer-vision detector gets scored against.**
+**A ground-truth perception node for a robotic e-waste disassembly simulation — built to unblock two
+downstream roles whose work could not start until something published a battery's position, and to
+serve as the reference the real computer-vision detector gets scored against.**
+
+That node is the centrepiece, and this repository is the whole perception role it came out of: getting
+the cameras to produce a frame at all, unblocking the roles behind perception before any vision model
+existed, and then replacing a number the project had trusted for months with one that was measured.
 
 Perception sits between the cameras and everything that drives the arm:
 
@@ -99,13 +105,21 @@ GL drivers, all failing the same way, with the working one isolated. Escalated w
 ranked by risk rather than fixed — the fix was a structural decision about how the simulation is
 composed, and that belonged to the role that owns the launch files.
 
-Three of those four have the same shape: **a check that passed for a reason unrelated to the thing
-being checked.** Including one of my own — I had cited a ROS publisher count as proof the cameras were
-working, and `ros_gz_bridge` creates that publisher whether or not a single frame ever arrives.
+Three of the four findings — counting the silent camera failure above — have the same shape: **a check
+that passed for a reason unrelated to the thing being checked.** Including one of my own: I had cited a
+ROS publisher count as proof the cameras were working, and `ros_gz_bridge` creates that publisher
+whether or not a single frame ever arrives.
 
 → [06-findings.md](docs/06-findings.md)
 
-One more, found while chasing a communication fault and well outside a perception role: the FastRTPS transport under ROS 2 keeps inter-node messages in **shared memory with no process-level access control**, and leaves stale segments after an unclean shutdown. Harmless in simulation; in a deployed system it means any local process can read or write the messages driving physical actuation. Documented and passed to the team, with the matching perception-side mitigation — a validator in front of `/target_pose` — written down next to it. → [08-working-practices.md](docs/08-working-practices.md)
+One more, found while chasing a communication fault and well outside a perception role: the FastRTPS
+transport under ROS 2 keeps inter-node messages in **shared memory with no process-level access
+control**, and leaves stale segments behind after an unclean shutdown. Harmless in simulation; in a
+deployed system it means any local process can read — or write — the messages driving physical
+actuation. Documented and passed to the team, with the matching perception-side mitigation, a validator
+in front of `/target_pose`, written down next to it.
+
+→ [08-working-practices.md](docs/08-working-practices.md)
 
 ---
 
