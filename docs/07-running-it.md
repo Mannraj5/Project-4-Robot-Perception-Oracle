@@ -16,7 +16,7 @@ moment it is paused, and after `gt_timeout_s` the node stops publishing rather t
 position.
 
 Headless (`-s`) is fine, and the arm is not needed — see finding 3 in
-[04-findings.md](04-findings.md) for why running both at once does not currently work.
+[06-findings.md](06-findings.md) for why running both at once does not currently work.
 
 ## Terminal 2 — the node
 
@@ -53,6 +53,20 @@ exists, otherwise to the home directory. A captured run is in
 
 > The script does not use `set -u`. ROS 2's `setup.bash` is not safe under `nounset` and will abort the
 > script on sourcing.
+
+## The other two nodes
+
+```bash
+# overhead camera -> ROS 2, saving every 5th frame
+python3 perception/camera_subscriber.py --ros-args -p save_dir:=~/camera_frames -p save_every_n:=5
+
+# the placeholder, superseded by the oracle but kept for the record
+python3 perception/fake_detector.py --ros-args -p num_objects:=1
+```
+
+`camera_subscriber.py` needs the camera bridge running (see below) and subscribes best-effort, which
+sensor streams require -- a default reliable subscriber connects without error and then receives
+nothing at all.
 
 ## Camera pipeline
 

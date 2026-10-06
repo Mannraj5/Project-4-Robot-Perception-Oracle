@@ -24,7 +24,7 @@ The shared world file declares the batteries at z = 0.81 m. The oracle showed th
 **z = 0.050 m** at startup and again after any `set_pose`. The reachability role's work-surface value of
 0.05 m therefore matches the *physical* state of the shared world, not its *declared* one. Until the
 table collision is fixed, any target read from the world file is 0.76 m too high — see
-[04-findings.md](04-findings.md).
+[06-findings.md](06-findings.md).
 
 ## Still open
 

@@ -43,7 +43,7 @@ All nine checks passed. The published detection tracks the object's true positio
 floating-point precision — a teleport to exactly zero comes back as 6.4 × 10⁻¹⁹, which is what an exact
 zero looks like after a round trip through the physics engine.
 
-The z column is the odd one out, and is the subject of [04-findings.md](04-findings.md).
+The z column is the odd one out, and is the subject of [06-findings.md](06-findings.md).
 
 ## Evidence
 

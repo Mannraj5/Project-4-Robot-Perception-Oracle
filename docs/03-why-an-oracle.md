@@ -12,10 +12,11 @@ camera -> detector -> target pose -> motion planner -> pick -> place
 Three roles own different parts of it. Perception sits in the middle, and until perception publishes
 something, the two stages behind it have nothing to run against.
 
-At the point this work started, the vision model was still being trained. The repository's placeholder
-detector published a position taken from a constant that had been copied out of the world file. That is
-enough to prove a subscriber is wired up correctly, and nothing more: it reports the same answer whether
-the simulation is running, paused, or lying.
+At the point this work started, the vision model was still being trained, and the placeholder standing
+in for it was `fake_detector.py` in this repository -- written earlier in the same role, and labelled
+PLACEHOLDER STATUS in its own docstring. It published a position taken from a constant copied out of
+the world file. That is enough to prove a subscriber is wired up correctly, and nothing more: it
+reports the same answer whether the simulation is running, paused, or lying.
 
 ## The idea
 
@@ -36,7 +37,7 @@ same run. The budget is already set by the motion planner's approach tolerance, 
 
 **It tells the truth about the world.** This turned out to matter more than the other two. A constant
 read from a file cannot disagree with the file. Ground truth can — and did, by 0.76 m, within seconds of
-first being switched on. See [04-findings.md](04-findings.md).
+first being switched on. See [06-findings.md](06-findings.md).
 
 ## What makes it an oracle and not a detector
 
