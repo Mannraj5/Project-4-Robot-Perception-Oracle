@@ -94,6 +94,21 @@ downstream has to tolerate that, and an average rate on its own would have hidde
 `perception/camera_evidence.sh` reproduces all of the above: `sdf` shows the plugin and resolutions in
 the world file, `cam` bridges both cameras and measures the rate, `crash` reproduces the blocker below.
 
+## What came out of it: a second viewpoint and a dataset
+
+With the overhead camera rendering, a **side camera** was added to the scene as a second viewpoint for
+later depth estimation, bridged alongside the overhead feed, and both confirmed publishing
+simultaneously.
+
+The first run of the working pipeline produced **about 4,000 frames at 1280 x 720** for the vision team
+to train against -- the resolution change to 1280 x 960 came afterwards, once the letterbox arithmetic
+above settled the question properly.
+
+Two measurements were passed to the architect for the platform costing, with an explicit note not to
+conflate them: the simulation sustained a real-time factor of **~0.98** with both cameras active, while
+the cameras themselves rendered at **~0.7 Hz** against a configured 30 Hz. Physics stepping is CPU-bound
+and unaffected by graphics acceleration; sensor rendering is not. They are two independent bottlenecks.
+
 ## A correction to my own earlier reporting
 
 I had previously cited `Publisher count: 1` on both cameras as evidence the dual-camera setup was

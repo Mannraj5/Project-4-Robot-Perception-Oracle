@@ -102,6 +102,8 @@ working, and `ros_gz_bridge` creates that publisher whether or not a single fram
 
 → [06-findings.md](docs/06-findings.md)
 
+One more, found while chasing a communication fault and well outside a perception role: the FastRTPS transport under ROS 2 keeps inter-node messages in **shared memory with no process-level access control**, and leaves stale segments after an unclean shutdown. Harmless in simulation; in a deployed system it means any local process can read or write the messages driving physical actuation. Documented and passed to the team, with the matching perception-side mitigation — a validator in front of `/target_pose` — written down next to it. → [08-working-practices.md](docs/08-working-practices.md)
+
 ---
 
 ## How it is tested
@@ -143,6 +145,8 @@ docs/
   05-coordinate-frames.md     frames, axes and message types confirmed across three roles
   06-findings.md              four defects, with reproduction steps
   07-running-it.md            how to run the nodes and the scripts
+  08-working-practices.md     shared-file edits, evidence discipline, a security finding
+  09-limitations-and-open-items.md  what this is not, and what was left unresolved
 results/                 captured verification output
 ```
 

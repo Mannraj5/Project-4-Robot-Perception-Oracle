@@ -82,3 +82,5 @@ expecting:
 - [02-camera-pipeline.md](02-camera-pipeline.md) — zero frames, the one-line cause, and the resolution decision
 - [05-coordinate-frames.md](05-coordinate-frames.md) — frames, axes and message types confirmed from three roles' source
 - [06-findings.md](06-findings.md) — four defects, with reproduction steps and what was escalated rather than fixed
+- [08-working-practices.md](08-working-practices.md) — editing files you do not own, evidence discipline, and a transport-layer security finding outside the role
+- [09-limitations-and-open-items.md](09-limitations-and-open-items.md) — what the oracle is not, and what was still unresolved
