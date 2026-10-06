@@ -14,9 +14,16 @@ bug.
 **Observed.** The overhead camera published nothing. No warning, no error, no partial output. The
 sensor was declared in the world file and appeared in the scene.
 
-**Cause.** The world file declared three system plugins but not `gz-sim-sensors-system`. Gazebo loads
-its default plugin set **only when a world declares no `<plugin>` tags at all** — so declaring three
-means declaring all of them, and the camera sensors were parsed and then silently ignored.
+**Cause.** Three unrelated faults stacked on top of each other, each sufficient on its own to stop any
+image reaching ROS 2: a stale workspace overlay in `.bashrc` shadowing the arm description package; the
+absent `gz-sim-sensors-system` plugin, because Gazebo loads its default plugin set **only when a world
+declares no `<plugin>` tags at all**, so declaring three means declaring all of them; and no camera
+bridge node in the launch file at all, despite a prior contributor's TODO.
+
+**How it was found.** By bisecting the pipeline into independently testable segments and eliminating
+hypotheses one at a time, rather than applying the most likely fix and relaunching. With three faults
+present, any partial fix produces no visible improvement and no information — so the obvious approach
+would have yielded nothing while costing a relaunch each time.
 
 **Consequence.** A dead camera is indistinguishable from a mis-configured subscriber and from a paused
 simulation. Time went into all three before the cause was found.

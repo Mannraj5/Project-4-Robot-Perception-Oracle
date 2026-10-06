@@ -70,8 +70,20 @@ detector: [03-why-an-oracle.md](03-why-an-oracle.md).
 | Node | Publishes | Exists to | Status |
 |---|---|---|---|
 | `camera_subscriber.py` | frames to disk | give the vision model real images, at the agreed resolution | working |
-| `fake_detector.py` | `/detected_objects` | unblock arm-driving logic before any model exists | superseded by the oracle |
+| `fake_detector.py` | `/detected_objects` | unblock arm-driving logic before any model exists | superseded by the oracle, kept as a camera-independent smoke test |
 | `oracle_detector.py` | `/target_pose`, `/detected_battery_position`, `/detected_objects` | run the full loop against a physically true target, and score the real detector later | working, verified |
+
+## How it ran
+
+| | |
+|---|---|
+| 25 Jul | roles allocated; perception input claimed |
+| 9 Aug | camera pipeline diagnosed and restored, subscriber and placeholder detector written |
+| 19 Aug | first pull request opened |
+| 20 Aug | mid-trimester panel — live demonstration of the pull request, the commits and the running nodes |
+| 26 Aug | camera pipeline re-established in the shared world at 1280 × 960; crash characterised; handover |
+| 13 Sep | integration map read across three repositories; oracle built, verified and merged |
+| 18 Sep | coordinate-frame confirmation opened as a reviewed pull request, merged by the role that asked |
 
 ## The rest of the role
 

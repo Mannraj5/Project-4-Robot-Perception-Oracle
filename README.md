@@ -20,9 +20,12 @@ shortest way in.
 No warning, no error, no partial output. The sensor was declared in the world file and appeared in the
 scene.
 
-The world declared three system plugins but not `gz-sim-sensors-system`, and **Gazebo falls back to its
-default plugin set only when a world declares no plugins at all.** Declaring three means declaring all
-of them; the camera blocks were parsed, accepted, and silently never rendered.
+It turned out to be **three unrelated faults stacked on top of each other**, each sufficient on its own
+to stop any image reaching ROS 2 — a stale workspace overlay shadowing a package, a missing sensors
+plugin (Gazebo falls back to its default plugin set *only* when a world declares no plugins at all, so
+declaring three means declaring all of them), and no camera bridge node in the launch file at all.
+Found by bisecting the pipeline and eliminating hypotheses one at a time, because with three faults
+present any partial fix shows no improvement and tells you nothing.
 
 Fixed and verified end to end at **1280 × 960**, which is the resolution the vision model's 640 × 640
 input letterboxes into at exactly 0.5 scale with 80 px of whole-number padding — so a detection maps

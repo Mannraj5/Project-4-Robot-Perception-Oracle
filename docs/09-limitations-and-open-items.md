@@ -26,6 +26,11 @@ plugin on each target model, which populates the header fields `ros_gz_bridge` n
 rejected for this path because those fields are unset by default, not because bridging is wrong in
 principle.
 
+**The side camera's framing was never verified.** It was added as a second viewpoint for later depth
+work and left at 640 × 480 deliberately — that letterboxes into the model's 640 × 640 at exactly 1.0
+scale with no resampling at all, so it is already model-ready. Its *pose*, however, is still the best
+guess it was created with, and whether it actually sees the workspace was never confirmed.
+
 ## The suggested fix that was not applied
 
 The batteries fall through the table because the top link has a visual and no collision
@@ -60,6 +65,10 @@ Resolution was settled; these were not:
   upstream, and it decides whether `/target_pose` is the hand-off or whether the sub-team converges on
   something else.
 - **Who applies the table-collision fix.**
+- **A reported detector publishing no detections at a perfect 2 Hz** in the lead's integration build. If
+  that was the placeholder, the reproduction would settle whether it should be fixed or formally retired
+  in favour of the oracle — a node that publishes nothing at a flawless rate is the most convincing
+  possible way to look healthy.
 - **Whether the oracle should keep publishing all three topics** or the consumers should converge on
   one. Publishing all three costs nothing — and hides the question, which is why it is written down
   here.

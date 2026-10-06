@@ -6,7 +6,27 @@ actually does once it works.
 
 ---
 
-## The cause: one missing plugin, and a fallback that stops applying
+## Not one fault. Three, stacked.
+
+The temptation with a silent failure is to try the most likely fix and relaunch. That would have been
+the wrong move here, because there were **three independent faults in the pipeline at once**, each of
+which would on its own have stopped any image reaching ROS 2. A partial fix produces no visible
+improvement and therefore no information — and each attempt costs a full simulation relaunch.
+
+So the pipeline was bisected into segments that could be tested on their own, and hypotheses eliminated
+one at a time. Slower per step; far faster overall, and it is the only reason all three were correctly
+attributed rather than conflated into one wrong story.
+
+| # | Root cause | Resolution | Verified by |
+|---|---|---|---|
+| 1 | A stale workspace overlay sourced in `.bashrc` was shadowing the arm description package | removed the conflicting source line, established a clean sourcing order | launch completes, all three controllers activate |
+| 2 | `gz-sim-sensors-system` absent from the world file, so sensors advertised topics but never rendered | added the plugin with the `ogre` render engine, matching the environment's GL constraints | `gz topic -e` returns real pixel data |
+| 3 | No camera bridge node existed in the launch file, despite a prior contributor's TODO note | added a bridge node with the correct topic and message-type mappings | `ros2 topic hz` reports a live rate |
+
+Had the first plausible explanation been accepted, the other two would have surfaced later and been
+considerably harder to isolate — by then entangled with whatever else had changed in between.
+
+## Fault 2 in detail: a fallback that stops applying
 
 The world file declared three system plugins — physics, user-commands, scene-broadcaster — but not
 `gz-sim-sensors-system`.

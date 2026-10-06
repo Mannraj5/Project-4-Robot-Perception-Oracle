@@ -44,6 +44,11 @@ the bridge was configured and nothing else. The correction is recorded in
 [02-camera-pipeline.md](02-camera-pipeline.md) rather than quietly replaced, because the mistake is
 more instructive than the fix.
 
+**Keep the evidence in one shape.** Verification is a committed, repeatable script with its results
+committed alongside it, deliberately in the same format the reachability role already used — so the
+sub-team's test evidence reads the same way whoever produced it, rather than each role inventing its own
+convention.
+
 **Characterise, then escalate.** When the simulator crash turned out not to be mine to fix, the useful
 output was not another attempt — it was seven configurations, the log line that always precedes the
 failure, and three options ranked by risk, so the person who owned the decision could make it in
