@@ -8,6 +8,31 @@ The method matters as much as the answers: every row below is confirmed from sou
 standard, not from a document describing what the code was supposed to do. Two rows could not be
 confirmed that way, and they are listed as open rather than guessed.
 
+## What reading the code showed before any of it was answered
+
+The interface documents in the repository were empty stubs, so the consumers' source was read instead.
+Three things came out of that, and together they are the reason the oracle was built the way it was:
+
+**Nothing was publishing to all three consumers.** Each had settled on its own topic and type:
+
+| Consumer | Subscribes to | Type |
+|---|---|---|
+| motion-planning node | `target_pose`, keep-last-1 | `geometry_msgs/PoseStamped`, approach tolerance **0.02 m** |
+| reachability checker | `/detected_battery_position` | `geometry_msgs/Point` |
+| the perception contract itself | `/detected_objects` | `vision_msgs/Detection3DArray` |
+
+None of the three choices was wrong. The absence of any written statement of them was — and it is why
+the oracle publishes all three rather than picking a winner on someone else's behalf.
+
+**That 0.02 m approach tolerance is the first hard number the perception work had to aim at.** Until it
+was read out of the planning node's source, "accurate enough" had no definition anywhere in the project.
+
+**Much of what the documents described did not exist yet.** The vision repository contained no ROS 2
+code and had not been pushed in over a month; `yolo_node.py` and `perception_bridge.py` were 0-byte
+stubs; and the working simulation -- world file, launch file and the pick-and-place demonstrator --
+existed only inside individual VMs rather than in version control. Planning perception around those
+files as though they were real would have meant building against nothing.
+
 ## Confirmed
 
 | Question | Answer | Where it was confirmed |

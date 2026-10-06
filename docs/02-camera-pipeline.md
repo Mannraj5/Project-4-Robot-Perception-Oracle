@@ -94,6 +94,30 @@ downstream has to tolerate that, and an average rate on its own would have hidde
 `perception/camera_evidence.sh` reproduces all of the above: `sdf` shows the plugin and resolutions in
 the world file, `cam` bridges both cameras and measures the rate, `crash` reproduces the blocker below.
 
+## Bridging both cameras into ROS 2
+
+Rendering frames inside Gazebo is only half of it -- nothing in ROS 2 can see them until they are
+bridged. A bridge node was added to the integration launch file covering both cameras, image and
+`camera_info` for each:
+
+```
+/top_camera/image        sensor_msgs/msg/Image      [ gz.msgs.Image
+/top_camera/camera_info  sensor_msgs/msg/CameraInfo [ gz.msgs.CameraInfo
+/side_camera/image       sensor_msgs/msg/Image      [ gz.msgs.Image
+/side_camera/camera_info sensor_msgs/msg/CameraInfo [ gz.msgs.CameraInfo
+```
+
+The `camera_info` topics are not optional extras: the intrinsics they carry are what any later
+pixel-to-world projection has to back-project through.
+
+One expected problem turned out not to exist. The side camera declares `<topic>side_camera</topic>`,
+which looked like it would mismatch the bridge's `/side_camera/image` -- but Gazebo normalises a
+camera's topic into `<base>/image` and `<base>/camera_info`, so both cameras land on the same
+convention and all four bridge lines were already correct. Worth checking rather than assuming in
+either direction.
+
+`perception/camera_evidence.sh cam` brings the same bridge up on its own for inspection.
+
 ## What came out of it: a second viewpoint and a dataset
 
 With the overhead camera rendering, a **side camera** was added to the scene as a second viewpoint for

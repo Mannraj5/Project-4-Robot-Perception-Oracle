@@ -17,7 +17,9 @@ on since the script was written fails loudly instead of being corrupted quietly.
 additionally parsed with `ast.parse` before every relaunch, and every edit wrote a timestamped backup
 first.
 
-No change made this way ever needed a rollback.
+No change made this way ever needed a rollback. The world-file resolution edit, for instance, was
+applied by `apply_camera_resolution_960.py` -- a tool rather than a deliverable, which is why it is
+described here rather than shipped.
 
 The same discipline applied to *not* merging: the camera fix was verified working and then handed over
 **unmerged**, because on its own it would have broken the arm simulation for everyone else — see
