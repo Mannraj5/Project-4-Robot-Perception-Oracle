@@ -1,6 +1,6 @@
 # Robot Perception Oracle
 
-**The perception stage of a robotic e-waste disassembly simulation: getting the cameras to produce a frame at all, unblocking two downstream roles before the vision model existed, and then replacing the number everyone had been trusting with one that was actually measured.**
+**A ground-truth perception node for a robotic e-waste disassembly simulation — built to unblock two downstream roles whose work could not start until something published a battery's position, and to serve as the reference the real computer-vision detector gets scored against.**
 
 Perception sits between the cameras and everything that drives the arm:
 
