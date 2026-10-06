@@ -1,0 +1,4 @@
+# Unit tests only. The node itself depends on rclpy, geometry_msgs and
+# vision_msgs, which come from a ROS 2 Jazzy install rather than from pip,
+# and optionally on the gz.transport13 Python bindings shipped with Gazebo.
+pytest>=8.0

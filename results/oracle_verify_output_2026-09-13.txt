@@ -1,0 +1,144 @@
+=== oracle_detector verification - Sun Sep 13 04:20:02 PM AEST 2026 ===
+not found: "/home/student/ws_moveit/install/moveit_ros_tests/share/moveit_ros_tests/local_setup.bash"
+--- 1. Gazebo pose topic present? ---
+OK
+--- 2. start oracle_detector ---
+[INFO] [1789280405.381865714] [oracle_detector]: pose/info entities seen: ['base_v', 'battery_1', 'battery_2', 'battery_3', 'body', 'desk', 'drop_box', 'floor_v', 'leg_nn', 'leg_np', 'leg_pn', 'leg_pp', 'link', 'room', 'side_camera', 'structure', 'sun', 'sunVisual', 'table', 'top_v', 'v', 'wall_xn', 'wall_xn_v', 'wall_xp', 'wall_xp_v', 'wall_yn', 'wall_yn_v', 'wall_yp', 'wall_yp_v']
+[INFO] [1789280405.383873896] [oracle_detector]: ground truth acquired for "battery_1": (-0.1500, 0.6200, 0.0500)
+[INFO] [1789280405.388569988] [oracle_detector]: Oracle detector: target="battery_1" from /world/ewaste_room/pose/info via gz.transport13 python bindings @ 2.0 Hz, frame=world, noise=off
+--- 3. ROS2 topics ---
+/detected_battery_position
+/detected_objects
+/target_pose
+--- 4. /target_pose (PoseStamped, once) ---
+header:
+  stamp:
+    sec: 1789280417
+    nanosec: 850874976
+  frame_id: world
+pose:
+  position:
+    x: -0.15
+    y: 0.62
+    z: 0.049999610465892526
+  orientation:
+    x: -2.882889520271306e-17
+    y: -7.537624813813734e-18
+    z: -1.2014379718207232e-18
+    w: 1.0
+---
+--- 5. /detected_battery_position (Point, once) ---
+x: -0.15
+y: 0.62
+z: 0.049999610465892526
+---
+--- 6. /detected_objects (Detection3DArray, once) ---
+header:
+  stamp:
+    sec: 1789280421
+    nanosec: 850238183
+  frame_id: world
+detections:
+- header:
+    stamp:
+      sec: 1789280421
+      nanosec: 850238183
+    frame_id: world
+  results:
+  - hypothesis:
+      class_id: battery
+      score: 1.0
+    pose:
+      pose:
+        position:
+          x: -0.15
+          y: 0.62
+          z: 0.049999610465892526
+        orientation:
+          x: -2.882889520271306e-17
+          y: -7.537624813813734e-18
+          z: -1.2014379718207232e-18
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+  id: ''
+---
+--- 7. publish rate (/target_pose, ~10 s) ---
+average rate: 2.000
+	min: 0.498s max: 0.502s std dev: 0.00143s window: 4
+average rate: 1.998
+	min: 0.498s max: 0.503s std dev: 0.00160s window: 7
+average rate: 1.996
+	min: 0.496s max: 0.510s std dev: 0.00368s window: 9
+average rate: 2.000
+	min: 0.491s max: 0.510s std dev: 0.00414s window: 12
+average rate: 2.000
+	min: 0.491s max: 0.510s std dev: 0.00376s window: 15
+average rate: 1.999
+	min: 0.491s max: 0.510s std dev: 0.00368s window: 18
+--- 8. MOVE TEST: teleport battery_1 to (x: 0.00, y: 0.60, z: 0.81) ---
+data: true
+
+--- /target_pose position after move (expect x~0.00, y~0.60; note z) ---
+x: 6.409880918794619e-19
+y: 0.6
+z: 0.049662751530527446
+---
+--- 9. restore battery_1 to (x: -0.15, y: 0.62, z: 0.81) ---
+data: true
+
+--- /target_pose position after restore (expect x~-0.15, y~0.62; note z) ---
+x: -0.15
+y: 0.62
+z: 0.049988901115477165
+---
