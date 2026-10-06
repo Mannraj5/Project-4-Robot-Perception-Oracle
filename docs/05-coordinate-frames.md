@@ -4,6 +4,12 @@ Written to close a set of open items raised by the workspace-reachability role, 
 mapping could not be treated as a real robot coordinate transformation until the frame, the axis
 convention and the message types had been confirmed against what the other roles' code actually does.
 
+It started as a question in the sub-team channel rather than as an assigned task: the reachability
+role asked which coordinate frame the battery target should use, and no document in the project
+answered it. This file is the answer, written up as a reviewed pull request rather than a chat
+reply -- reviewed and merged by that role, and adopted as the alignment reference for their own
+work.
+
 The method matters as much as the answers: every row below is confirmed from source code or a published
 standard, not from a document describing what the code was supposed to do. Two rows could not be
 confirmed that way, and they are listed as open rather than guessed.
